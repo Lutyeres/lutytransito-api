@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class LutytransitoApiApplication {
 
     public static void main(String[] args) {
+
         SpringApplication.run(LutytransitoApiApplication.class, args);
     }
 
