@@ -1,1 +1,0 @@
-CREATE TABLE teste (id INT PRIMARY KEY);
