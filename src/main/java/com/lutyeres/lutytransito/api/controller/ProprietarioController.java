@@ -1,30 +1,71 @@
 package com.lutyeres.lutytransito.api.controller;
 
 import com.lutyeres.lutytransito.domain.model.Proprietario;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.lutyeres.lutytransito.domain.repository.ProprietarioRepository;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
+import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
+@AllArgsConstructor
+@RequestMapping("/proprietarios")
 public class ProprietarioController {
 
-    @GetMapping("/proprietarios")
+
+    private final ProprietarioRepository proprietarioRepository;
+
+    @GetMapping
     public List<Proprietario> listar(){
-        var p1 = new Proprietario();
-        p1.setId(1L);
-        p1.setNome("Savyo Lutyeres");
-        p1.setEmail("savyo@lutyeres.dev");
-        p1.setTelefone("62 9 9999-9999");
 
-        var p2 = new Proprietario();
-        p2.setId(2L);
-        p2.setNome("Brunna Rafaella");
-        p2.setEmail("brubs@gmail.com");
-        p2.setTelefone("62 9 9999-8888");
+        return proprietarioRepository.findAll();
+    }
 
-        return Arrays.asList(p1,p2);
+    @GetMapping("/{id}")
+    public ResponseEntity<Proprietario> buscar(@PathVariable Long id){
+        return proprietarioRepository.findById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public Proprietario adicionar(@Valid @RequestBody Proprietario proprietario){
+        return proprietarioRepository.save(proprietario);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Proprietario> atualizar(@PathVariable Long id,
+                                                  @RequestBody Proprietario proprietario){
+
+        if(!proprietarioRepository.existsById(id)){
+            return  ResponseEntity.notFound().build();
+        }
+        proprietario.setId(id);
+        Proprietario proprietarioAtualizado = proprietarioRepository.save(proprietario);
+        return ResponseEntity.ok(proprietarioAtualizado);
+
+
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity deletar(@PathVariable Long id){
+
+        if(!proprietarioRepository.existsById(id)){
+            return ResponseEntity.notFound().build();
+        }
+
+        proprietarioRepository.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 
 }

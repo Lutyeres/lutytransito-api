@@ -1,6 +1,9 @@
 package com.lutyeres.lutytransito.domain.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,12 +20,19 @@ public class Proprietario {
     @Column(name = "propId")
     private Long id;
 
+    @NotBlank
+    @Size(max = 60)
     @Column(name = "propNome")
     private String nome;
 
+    @NotBlank
+    @Size(max = 225)
+    @Email
     @Column(name = "propEmail")
     private String email;
 
+    @NotBlank
+    @Size(max = 20)
     @Column(name = "propTelefone")
     private String telefone;
 

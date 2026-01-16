@@ -1,0 +1,4 @@
+API de transito feito por group lutyeres
+Java 21 com Spring Boot 4.0.1
+Maven, lutytransito-api.
+Dependências: Spring Web , Lombok, DevTools, Spring Data JPA, MySql Driver, Flyway, Validation 
