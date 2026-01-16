@@ -1,7 +1,9 @@
 package com.lutyeres.lutytransito.api.controller;
 
+import com.lutyeres.lutytransito.domain.exception.NegocioExeception;
 import com.lutyeres.lutytransito.domain.model.Proprietario;
 import com.lutyeres.lutytransito.domain.repository.ProprietarioRepository;
+import com.lutyeres.lutytransito.domain.service.RegistroProprietarioService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
@@ -21,12 +23,11 @@ import java.util.Optional;
 @RequestMapping("/proprietarios")
 public class ProprietarioController {
 
-
+    private final RegistroProprietarioService registroProprietarioService;
     private final ProprietarioRepository proprietarioRepository;
 
     @GetMapping
     public List<Proprietario> listar(){
-
         return proprietarioRepository.findAll();
     }
 
@@ -40,32 +41,23 @@ public class ProprietarioController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Proprietario adicionar(@Valid @RequestBody Proprietario proprietario){
-        return proprietarioRepository.save(proprietario);
+        return registroProprietarioService.salvar(proprietario);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Proprietario> atualizar(@PathVariable Long id,
-                                                  @RequestBody Proprietario proprietario){
-
-        if(!proprietarioRepository.existsById(id)){
-            return  ResponseEntity.notFound().build();
-        }
-        proprietario.setId(id);
-        Proprietario proprietarioAtualizado = proprietarioRepository.save(proprietario);
-        return ResponseEntity.ok(proprietarioAtualizado);
-
-
+    public ResponseEntity<Proprietario> atualizar(@PathVariable Long id,@Valid @RequestBody Proprietario proprietario){
+        return registroProprietarioService.atualizar(id, proprietario);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity deletar(@PathVariable Long id){
+        return registroProprietarioService.deletar(id);
+    }
 
-        if(!proprietarioRepository.existsById(id)){
-            return ResponseEntity.notFound().build();
-        }
-
-        proprietarioRepository.deleteById(id);
-        return ResponseEntity.noContent().build();
+    // Metodo que captura a exececao e entrega um status correto com um body adequado
+    @ExceptionHandler
+    public ResponseEntity<String> capturar (NegocioExeception e){
+        return ResponseEntity.badRequest().body(e.getMessage());
     }
 
 }
