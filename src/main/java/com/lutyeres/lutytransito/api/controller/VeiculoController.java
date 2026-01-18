@@ -35,17 +35,17 @@ public class VeiculoController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Veiculo adicionar(@RequestBody Veiculo veiculo){
+    public Veiculo adicionar(@Valid @RequestBody Veiculo veiculo){
         return registroVeiculoService.salvar(veiculo);
-    }
-
-    @ExceptionHandler
-    public ResponseEntity<String> capturar(NegocioExeception e){
-        return ResponseEntity.badRequest().body(e.getMessage());
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Veiculo> atualizar(@PathVariable Long id,@RequestBody Veiculo veiculo){
         return registroVeiculoService.atualizar(id, veiculo);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<String> capturar(NegocioExeception e){
+        return ResponseEntity.badRequest().body(e.getMessage());
     }
 }
