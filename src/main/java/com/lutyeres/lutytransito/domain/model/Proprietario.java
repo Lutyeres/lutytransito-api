@@ -1,5 +1,6 @@
 package com.lutyeres.lutytransito.domain.model;
 
+import com.lutyeres.lutytransito.domain.validation.ValidationGroups;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -15,7 +16,7 @@ import lombok.Setter;
 @Entity //Mapeamento do Objeto Relacional com o Banco de dados
 public class Proprietario {
 
-    @NotNull
+    @NotNull(groups = ValidationGroups.ProprietarioId.class)
     @EqualsAndHashCode.Include //Anotação para incluir o ID no Equals and HashCode
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

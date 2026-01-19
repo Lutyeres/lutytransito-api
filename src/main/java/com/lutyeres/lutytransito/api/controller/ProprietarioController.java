@@ -3,6 +3,7 @@ package com.lutyeres.lutytransito.api.controller;
 import com.lutyeres.lutytransito.domain.exception.NegocioExeception;
 import com.lutyeres.lutytransito.domain.model.Proprietario;
 import com.lutyeres.lutytransito.domain.repository.ProprietarioRepository;
+import com.lutyeres.lutytransito.domain.repository.VeiculoRepository;
 import com.lutyeres.lutytransito.domain.service.RegistroProprietarioService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -53,11 +54,4 @@ public class ProprietarioController {
     public ResponseEntity deletar(@PathVariable Long id){
         return registroProprietarioService.deletar(id);
     }
-
-    // Metodo que captura a exececao e entrega um status correto com um body adequado
-    @ExceptionHandler
-    public ResponseEntity<String> capturar (NegocioExeception e){
-        return ResponseEntity.badRequest().body(e.getMessage());
-    }
-
 }

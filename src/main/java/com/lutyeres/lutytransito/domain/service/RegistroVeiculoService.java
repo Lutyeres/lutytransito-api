@@ -17,8 +17,8 @@ import java.util.Optional;
 @AllArgsConstructor
 public class RegistroVeiculoService {
 
-    private VeiculoRepository veiculoRepository;
-    private RegistroProprietarioService registroProprietarioService;
+    private final VeiculoRepository veiculoRepository;
+    private final RegistroProprietarioService registroProprietarioService;
 
     @Transactional
     public Veiculo salvar(Veiculo novoVeiculo){

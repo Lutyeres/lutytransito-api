@@ -43,9 +43,4 @@ public class VeiculoController {
     public ResponseEntity<Veiculo> atualizar(@PathVariable Long id,@RequestBody Veiculo veiculo){
         return registroVeiculoService.atualizar(id, veiculo);
     }
-
-    @ExceptionHandler
-    public ResponseEntity<String> capturar(NegocioExeception e){
-        return ResponseEntity.badRequest().body(e.getMessage());
-    }
 }
