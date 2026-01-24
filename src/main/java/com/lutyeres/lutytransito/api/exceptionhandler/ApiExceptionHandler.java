@@ -12,15 +12,18 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.net.URI;
+
 @RestControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Override
     protected @Nullable ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
         ProblemDetail problemDetail = ProblemDetail.forStatus(status);
-        
+        problemDetail.setTitle("Um ou mais campos estão inválidos!");
+//        problemDetail.setType(URI.create());
 
-        return super.handleMethodArgumentNotValid(ex, headers, status, request);
+        return handleExceptionInternal(ex, problemDetail, headers, status, request);
     }
 
     // Metodo que captura a exececao e entrega um status correto com um body adequado
