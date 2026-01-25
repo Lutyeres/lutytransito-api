@@ -16,6 +16,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Getter
 @Setter
@@ -49,10 +50,10 @@ public class Veiculo {
     private String veicPlaca;
 
     @JsonProperty(access = Access.READ_ONLY)
-    private LocalDateTime veicDataApreensao;
+    private OffsetDateTime veicDataApreensao;
 
     @JsonProperty(access = Access.READ_ONLY)
-    private LocalDateTime veicDataCadastro;
+    private OffsetDateTime veicDataCadastro;
 
     @JsonProperty(access = Access.READ_ONLY)
     @Enumerated(EnumType.STRING)
