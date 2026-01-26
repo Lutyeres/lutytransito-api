@@ -1,6 +1,7 @@
 package com.lutyeres.lutytransito.api.assembler;
 
 import com.lutyeres.lutytransito.api.model.VeiculoRepresentationModel;
+import com.lutyeres.lutytransito.api.model.input.VeiculoInputRepresentationModel;
 import com.lutyeres.lutytransito.domain.model.Veiculo;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -13,6 +14,10 @@ import java.util.List;
 public class VeiculoAssembler {
 
     private final ModelMapper modelMapper;
+
+    public Veiculo toEntity(VeiculoInputRepresentationModel veiculoInputRepresentationModel){
+        return modelMapper.map(veiculoInputRepresentationModel, Veiculo.class);
+    }
 
     public VeiculoRepresentationModel toModel(Veiculo veiculo){
         return modelMapper.map(veiculo, VeiculoRepresentationModel.class);

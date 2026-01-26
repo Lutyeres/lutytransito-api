@@ -2,6 +2,7 @@ package com.lutyeres.lutytransito.api.controller;
 
 import com.lutyeres.lutytransito.api.assembler.VeiculoAssembler;
 import com.lutyeres.lutytransito.api.model.VeiculoRepresentationModel;
+import com.lutyeres.lutytransito.api.model.input.VeiculoInputRepresentationModel;
 import com.lutyeres.lutytransito.domain.exception.NegocioExeception;
 import com.lutyeres.lutytransito.domain.model.Veiculo;
 import com.lutyeres.lutytransito.domain.repository.VeiculoRepository;
@@ -40,8 +41,11 @@ public class  VeiculoController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public VeiculoRepresentationModel adicionar(@Valid @RequestBody Veiculo veiculo){
-        return veiculoAssembler.toModel(registroVeiculoService.salvar(veiculo));
+    public VeiculoRepresentationModel adicionar(@Valid @RequestBody VeiculoInputRepresentationModel veiculoInputRepresentationModel){
+        Veiculo novoVeiculo = veiculoAssembler.toEntity(veiculoInputRepresentationModel);
+        Veiculo veiculoCadastrado = registroVeiculoService.salvar(novoVeiculo);
+
+        return veiculoAssembler.toModel(veiculoCadastrado);
     }
 
     @PutMapping("/{id}")
