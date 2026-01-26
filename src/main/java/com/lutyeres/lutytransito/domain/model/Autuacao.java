@@ -21,10 +21,15 @@ public class Autuacao {
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "veiculo_id")
     private Veiculo veiculo;
 
     private String descricao;
+
+    @Column(name = "valor_multa")
     private BigDecimal valorMulta;
+
+    @Column(name = "data_ocorrencia")
     private OffsetDateTime dataOcorrencia;
 
 }
