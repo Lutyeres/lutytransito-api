@@ -1,6 +1,6 @@
 package com.lutyeres.lutytransito.domain.model;
 
-public enum StatusVeiculo {
+public enum  StatusVeiculo {
 
     REGULAR, APREENDIDO
 }
