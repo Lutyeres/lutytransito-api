@@ -1,5 +1,6 @@
 package com.lutyeres.lutytransito.api.controller;
 
+import com.lutyeres.lutytransito.api.assembler.VeiculoAssembler;
 import com.lutyeres.lutytransito.api.model.VeiculoRepresentationModel;
 import com.lutyeres.lutytransito.domain.exception.NegocioExeception;
 import com.lutyeres.lutytransito.domain.model.Veiculo;
@@ -21,17 +22,17 @@ public class  VeiculoController {
 
     private final VeiculoRepository veiculoRepository;
     private final RegistroVeiculoService registroVeiculoService;
-    private final ModelMapper modelMapper;
+    private final VeiculoAssembler veiculoAssembler;
 
     @GetMapping
     public List<VeiculoRepresentationModel> listar(){
-        return veiculoRepository.findAll().stream().map(veiculo -> modelMapper.map(veiculo, VeiculoRepresentationModel.class)).toList();
+        return veiculoAssembler.toCollectionModel(veiculoRepository.findAll());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<VeiculoRepresentationModel> buscar(@PathVariable Long id){
         return veiculoRepository.findById(id)
-                .map(veiculo -> modelMapper.map(veiculo, VeiculoRepresentationModel.class))
+                .map(veiculoAssembler::toModel)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
 
@@ -39,8 +40,8 @@ public class  VeiculoController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Veiculo adicionar(@Valid @RequestBody Veiculo veiculo){
-        return registroVeiculoService.salvar(veiculo);
+    public VeiculoRepresentationModel adicionar(@Valid @RequestBody Veiculo veiculo){
+        return veiculoAssembler.toModel(registroVeiculoService.salvar(veiculo));
     }
 
     @PutMapping("/{id}")
