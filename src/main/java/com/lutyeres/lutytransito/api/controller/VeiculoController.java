@@ -6,6 +6,7 @@ import com.lutyeres.lutytransito.api.model.input.VeiculoInputRepresentationModel
 import com.lutyeres.lutytransito.domain.exception.NegocioExeception;
 import com.lutyeres.lutytransito.domain.model.Veiculo;
 import com.lutyeres.lutytransito.domain.repository.VeiculoRepository;
+import com.lutyeres.lutytransito.domain.service.ApreensaoVeiculoService;
 import com.lutyeres.lutytransito.domain.service.RegistroVeiculoService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -23,6 +24,7 @@ public class  VeiculoController {
 
     private final VeiculoRepository veiculoRepository;
     private final RegistroVeiculoService registroVeiculoService;
+    private final ApreensaoVeiculoService apreensaoVeiculoService;
     private final VeiculoAssembler veiculoAssembler;
 
     @GetMapping
@@ -51,5 +53,17 @@ public class  VeiculoController {
     @PutMapping("/{id}")
     public ResponseEntity<Veiculo> atualizar(@PathVariable Long id,@RequestBody Veiculo veiculo){
         return registroVeiculoService.atualizar(id, veiculo);
+    }
+
+    @PutMapping("/{veiculoId}/apreensao")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void apreender(@PathVariable Long veiculoId){
+        apreensaoVeiculoService.apreender(veiculoId);
+    }
+
+    @DeleteMapping("/{veiculoId}/apreensao")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void removerApreensao(@PathVariable Long veiculoId){
+        apreensaoVeiculoService.removerApreensao(veiculoId);
     }
 }
