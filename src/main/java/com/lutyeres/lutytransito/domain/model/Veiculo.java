@@ -1,5 +1,6 @@
 package com.lutyeres.lutytransito.domain.model;
 
+import com.lutyeres.lutytransito.domain.exception.NegocioExeception;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -42,4 +43,31 @@ public class Veiculo {
         getAutuacoes().add(autuacao);
         return autuacao;
     }
+
+    public void apreender(){
+        if(estaApreendido()){
+            throw new NegocioExeception("Veículo já se encontra apreendido!");
+        }
+
+        setVeicStatus(StatusVeiculo.APREENDIDO);
+        setVeicDataApreensao(OffsetDateTime.now());
+    }
+
+    public void removerApreensao(){
+        if(naoEstaApreendido()){
+            throw new NegocioExeception("Veículo não está apreendido!");
+        }
+
+        setVeicStatus(StatusVeiculo.REGULAR);
+        setVeicDataApreensao(null);
+    }
+
+    public boolean estaApreendido(){
+        return StatusVeiculo.APREENDIDO.equals(getVeicStatus());
+    }
+
+    public boolean naoEstaApreendido(){
+        return !estaApreendido();
+    }
+
 }
