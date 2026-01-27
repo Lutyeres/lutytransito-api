@@ -1,5 +1,6 @@
 package com.lutyeres.lutytransito.api.exceptionhandler;
 
+import com.lutyeres.lutytransito.domain.exception.EntidadeNaoEncontradaException;
 import com.lutyeres.lutytransito.domain.exception.NegocioExeception;
 import lombok.AllArgsConstructor;
 import org.jspecify.annotations.Nullable;
@@ -42,9 +43,18 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     // Metodo que captura a exececao e entrega um status correto com um body adequado
-    @ExceptionHandler
+    @ExceptionHandler(NegocioExeception.class)
     public ProblemDetail handleNegocio  (NegocioExeception e){
         ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
+        problemDetail.setTitle(e.getMessage());
+//        problemDetail.setType();
+
+        return problemDetail;
+    }
+
+    @ExceptionHandler(EntidadeNaoEncontradaException.class)
+    public ProblemDetail handleEntidadeNaoEncontrada  (EntidadeNaoEncontradaException e){
+        ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.NOT_FOUND);
         problemDetail.setTitle(e.getMessage());
 //        problemDetail.setType();
 

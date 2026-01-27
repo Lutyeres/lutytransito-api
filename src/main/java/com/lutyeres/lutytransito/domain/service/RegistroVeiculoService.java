@@ -1,5 +1,6 @@
 package com.lutyeres.lutytransito.domain.service;
 
+import com.lutyeres.lutytransito.domain.exception.EntidadeNaoEncontradaException;
 import com.lutyeres.lutytransito.domain.exception.NegocioExeception;
 import com.lutyeres.lutytransito.domain.model.Proprietario;
 import com.lutyeres.lutytransito.domain.model.StatusVeiculo;
@@ -57,7 +58,7 @@ public class RegistroVeiculoService {
 
 
     public Veiculo buscar(Long veiculoId){
-        return veiculoRepository.findById(veiculoId).orElseThrow(() -> new NegocioExeception("Veículo não encontrado!"));
+        return veiculoRepository.findById(veiculoId).orElseThrow(() -> new EntidadeNaoEncontradaException("Veículo não encontrado!"));
     }
 
 
