@@ -1,5 +1,6 @@
 package com.lutyeres.lutytransito.api.controller;
 
+import com.lutyeres.lutytransito.domain.exception.EntidadeNaoEncontradaException;
 import com.lutyeres.lutytransito.domain.exception.NegocioExeception;
 import com.lutyeres.lutytransito.domain.model.Proprietario;
 import com.lutyeres.lutytransito.domain.repository.ProprietarioRepository;

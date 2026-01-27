@@ -1,6 +1,7 @@
 package com.lutyeres.lutytransito.domain.service;
 
 
+import com.lutyeres.lutytransito.domain.exception.EntidadeNaoEncontradaException;
 import com.lutyeres.lutytransito.domain.exception.NegocioExeception;
 import com.lutyeres.lutytransito.domain.model.Proprietario;
 import com.lutyeres.lutytransito.domain.repository.ProprietarioRepository;
@@ -18,7 +19,7 @@ public class RegistroProprietarioService {
 
     public Proprietario buscar(Long propId){
         return proprietarioRepository.findById(propId).orElseThrow(() ->
-        new NegocioExeception("Proprietário não encontrado!"));
+        new EntidadeNaoEncontradaException("Proprietário não encontrado!"));
     }
 
     @Transactional
