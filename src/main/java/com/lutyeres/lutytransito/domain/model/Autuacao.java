@@ -12,6 +12,8 @@ import java.time.OffsetDateTime;
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
+@Table(name = "autuacao")
+
 public class Autuacao {
 
 

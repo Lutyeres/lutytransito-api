@@ -14,9 +14,9 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity //Mapeamento do Objeto Relacional com o Banco de dados
+@Table(name = "proprietario")
 public class Proprietario {
 
-    @NotNull
     @EqualsAndHashCode.Include //Anotação para incluir o ID no Equals and HashCode
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
