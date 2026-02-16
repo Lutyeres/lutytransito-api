@@ -1,14 +1,15 @@
 CREATE TABLE veiculo (
-                         veicId BIGINT NOT NULL AUTO_INCREMENT,
+                         veicId BIGSERIAL PRIMARY KEY,
                          propId BIGINT NOT NULL,
                          veicMarca VARCHAR(20) NOT NULL,
                          veicModelo VARCHAR(20) NOT NULL,
                          veicPlaca VARCHAR(7) NOT NULL,
-                         veicDataApreensao DATETIME NULL,
+                         veicDataApreensao TIMESTAMP NULL,
                          veicStatus VARCHAR(20) NOT NULL,
-                         veicDataCadastro DATETIME NOT NULL,
-                         PRIMARY KEY (veicId),
-                         UNIQUE INDEX veicPlaca_UNIQUE (veicPlaca ASC),
+                         veicDataCadastro TIMESTAMP NOT NULL,
+
+                         CONSTRAINT veicPlaca_unique UNIQUE (veicPlaca),
+
                          CONSTRAINT fk_veiculo_proprietario
                              FOREIGN KEY (propId)
                                  REFERENCES proprietario (propId)

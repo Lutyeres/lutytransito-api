@@ -1,8 +1,7 @@
 CREATE TABLE proprietario (
-                              propId BIGINT NOT NULL AUTO_INCREMENT,
+                              propId BIGSERIAL PRIMARY KEY,
                               propNome VARCHAR(60) NOT NULL,
                               propEmail VARCHAR(225) NOT NULL,
                               propTelefone VARCHAR(20) NOT NULL,
-                              PRIMARY KEY (propId),
-                              UNIQUE INDEX propEmail_UNIQUE (propEmail ASC)
+                              CONSTRAINT proprietario_prop_email_unique UNIQUE (propEmail)
 );
